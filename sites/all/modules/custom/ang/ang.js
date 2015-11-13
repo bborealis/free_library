@@ -2,7 +2,7 @@ angular.module('nodeListing', ['ngResource', 'ngDialog'])
 
   //Factory for the ngResource service.
   .factory('Node', function($resource) {
-    return $resorce(Drupal.settings.basePath + 'api/node/:param', {}, {
+    return $resource(Drupal.settings.basePath + 'api/node/:param', {}, {
       'search' : {method : 'GET', isArray : true}
     });
   })
@@ -13,15 +13,15 @@ angular.module('nodeListing', ['ngResource', 'ngDialog'])
 
     //Callback for performing the search using a param from the textfield.
     $scope.doSearch = function() {
-      $scope.nodes = Node.serach({param: $scope.serach});
+      $scope.nodes = Node.search({param: $scope.search});
     };
 
     //Callback to load the node info in the module
     $scope.open = function(nid) {
-      $sope.loadedNode =Node.get({param: nid});
+      $scope.loadedNode = Node.get({param: nid});
       ngDialog.open({
         template: 'loadedNodeTemplate',
-        scope: $scope
+        scope: $scope,
       });
     };
 

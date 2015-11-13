@@ -20,8 +20,8 @@ function ang_menu() {
 *@return array
 */
 function ang_node_api($param) {
-  //if passed param is node id
-  if ($param && is_numberic($param)) {
+  // If passed param is node id
+  if ($param && is_numeric($param)) {
     $node = node_load($param);
     return array(
       'nid' => $param,
@@ -31,11 +31,11 @@ function ang_node_api($param) {
     );
   }
   // If passed param is text value
-  elseif ($param && !is_numberic($param)) {
+  elseif ($param && !is_numeric($param)) {
     $nodes = db_query("SELECT nid, uid, title FROM {node} n JOIN {field_data_body} b ON n.nid = b.entity_id WHERE n.title LIKE :pattern ORDER BY n.created DESC LIMIT 5", array(':pattern' => '%' . db_like($param) . '%'))->fetchAll();
     return $nodes;
   }
-  //if there is not passed param
+  // If there is no passed param
   else {
     $nodes = db_query("SELECT nid, uid, title FROM {node} n JOIN {field_data_body} b ON n.nid = b.entity_id ORDER BY n.created DESC LIMIT 10")->fetchAll();
     return $nodes;
@@ -80,7 +80,7 @@ function ang_block_view($delta = '') {
         'js' => array(
           'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js',
           'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular-resource.js',
-          drupal_get_path('module', 'ang') . '/lib/ngDialog.min.js',
+          drupal_get_path('module', 'ang') . '/lib/ngDialog/ngDialog.min.js',
           drupal_get_path('module', 'ang') . '/ang.js',
         ),
         'css' => array(
